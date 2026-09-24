@@ -1,6 +1,11 @@
 # Per-site Media Volume
+![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FPsychosynthesis%2FMediaVolumeExtension%2Fmain%2Fmanifest.json&query=%24.version&style=flat&logo=firefox&label=Version) &nbsp; &nbsp;
+[<img src="https://badgen.net/badge/♥/Donate/red?icon=heart" alt="Donation page">](https://github.com/Psychosynthesis/Donation)
 
 A Manifest V3 browser extension for adjusting volume on websites that lack this feature.
+
+[Chrome Addon](https://addons.mozilla.org/ru/firefox/addon/per-site-media-volume/) |
+[Firefox Addon](https://chromewebstore.google.com/detail/per-site-media-volume/mmejbnpmedbibmenkhnaipdjaljjhccl)
 
 ## Features
 
