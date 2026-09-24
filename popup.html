@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="popupTitle">Volume</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main class="popup">
+    <header class="header">
+      <div class="header-copy">
+        <h1 data-i18n="popupTitle">Volume</h1>
+        <div id="site-domain" class="site-domain" data-i18n="detectingSite">Detecting site…</div>
+      </div>
+
+      <label id="switch" class="switch" aria-label="Enable volume control for the current site">
+        <input id="enabled" type="checkbox">
+        <span class="switch-track">
+          <span class="switch-thumb"></span>
+        </span>
+        <span id="enabled-label" class="switch-label">OFF</span>
+      </label>
+    </header>
+
+    <section class="volume-control">
+      <div class="volume-row">
+        <label for="volume" data-i18n="volumeLabel">Volume</label>
+        <output id="volume-value" for="volume">50%</output>
+      </div>
+
+      <input
+        id="volume"
+        type="range"
+        min="0"
+        max="100"
+        step="1"
+        value="50"
+      >
+    </section>
+
+    <p id="status" class="status" role="status" data-i18n="checkingPage">Checking page…</p>
+  </main>
+
+  <script src="shared.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+{
+  "extensionName": {
+    "message": "Per-site Media Volume"
+  },
+  "extensionDescription": {
+    "message": "Controls <audio> and <video> tags volume separately for each main domain."
+  },
+  "actionTitle": {
+    "message": "Volume"
+  },
+  "popupTitle": {
+    "message": "Volume"
+  },
+  "detectingSite": {
+    "message": "Detecting site..."
+  },
+  "toggleAriaLabel": {
+    "message": "Enable volume control for the current site"
+  },
+  "volumeLabel": {
+    "message": "Volume"
+  },
+  "checkingPage": {
+    "message": "Checking page..."
+  },
+  "unavailablePage": {
+    "message": "Unavailable page"
+  },
+  "mediaFoundEnabled": {
+    "message": "Media elements found: $COUNT$. Control is ON.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "mediaFoundDisabled": {
+    "message": "Media elements found: $COUNT$. Control is OFF.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "mediaNotFound": {
+    "message": "No <audio> / <video> elements found. The site may play media another way."
+  },
+  "saveError": {
+    "message": "Failed to save extension settings."
+  },
+  "activeTabError": {
+    "message": "Failed to detect the active tab."
+  },
+  "httpOnlyError": {
+    "message": "The extension only works on regular HTTP/HTTPS pages."
+  },
+  "siteDomainError": {
+    "message": "Failed to detect the main domain."
+  },
+  "initializationError": {
+    "message": "The extension cannot work on this page."
+  }
+}

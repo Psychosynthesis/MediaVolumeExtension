@@ -1,0 +1,63 @@
+{
+  "extensionName": {
+    "message": "Регулировка громкости"
+  },
+  "extensionDescription": {
+    "message": "Регулирует громкость тегов <audio> и <video> отдельно для каждого основного домена."
+  },
+  "actionTitle": {
+    "message": "Volume"
+  },
+  "popupTitle": {
+    "message": "Volume"
+  },
+  "detectingSite": {
+    "message": "Определение сайта..."
+  },
+  "toggleAriaLabel": {
+    "message": "Включить регулирование громкости для текущего сайта"
+  },
+  "volumeLabel": {
+    "message": "Volume"
+  },
+  "checkingPage": {
+    "message": "Проверка страницы..."
+  },
+  "unavailablePage": {
+    "message": "Недоступная страница"
+  },
+  "mediaFoundEnabled": {
+    "message": "Найдено медиаэлементов: $COUNT$. Регулирование включено.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "mediaFoundDisabled": {
+    "message": "Найдено медиаэлементов: $COUNT$. Регулирование выключено.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "mediaNotFound": {
+    "message": "Элементы <audio> / <video> не найдены. Возможно, сайт воспроизводит медиа другим способом."
+  },
+  "saveError": {
+    "message": "Не удалось сохранить настройки расширения."
+  },
+  "activeTabError": {
+    "message": "Не удалось определить активную вкладку."
+  },
+  "httpOnlyError": {
+    "message": "Расширение работает только на обычных HTTP/HTTPS-страницах."
+  },
+  "siteDomainError": {
+    "message": "Не удалось определить основной домен."
+  },
+  "initializationError": {
+    "message": "Расширение не может работать на этой странице."
+  }
+}

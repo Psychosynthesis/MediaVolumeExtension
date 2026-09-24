@@ -1,0 +1,150 @@
+:root {
+  color-scheme: light dark;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 270px;
+  min-width: 270px;
+  max-width: 270px;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background: Canvas;
+  color: CanvasText;
+}
+
+.popup {
+  padding: 14px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.header-copy {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+h1 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.site-domain {
+  max-width: 160px;
+  margin-top: 4px;
+  overflow: hidden;
+  color: GrayText;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.switch {
+  display: inline-flex;
+  flex: 0 0 70px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.switch input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.switch-track {
+  position: relative;
+  flex: 0 0 40px;
+  width: 40px;
+  height: 22px;
+  border: 1px solid GrayText;
+  border-radius: 999px;
+  background: color-mix(in srgb, CanvasText 12%, Canvas);
+  transition: background 120ms ease;
+}
+
+.switch-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: CanvasText;
+  transition: transform 120ms ease;
+}
+
+.switch input:checked + .switch-track {
+  background: Highlight;
+}
+
+.switch input:checked + .switch-track .switch-thumb {
+  transform: translateX(18px);
+}
+
+.switch input:focus-visible + .switch-track {
+  outline: 2px solid Highlight;
+  outline-offset: 2px;
+}
+
+.switch-label {
+  width: 24px;
+  flex: 0 0 24px;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.volume-control {
+  margin-top: 18px;
+}
+
+.volume-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+#volume {
+  width: 100%;
+}
+
+.status {
+  height: 56px;
+  margin: 14px 0 0;
+  padding-top: 10px;
+  overflow: auto;
+  border-top: 1px solid color-mix(in srgb, CanvasText 18%, Canvas);
+  color: GrayText;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.status.error {
+  color: #c62828;
+}
+
+button,
+input {
+  font: inherit;
+}
