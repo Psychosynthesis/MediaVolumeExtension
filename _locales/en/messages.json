@@ -60,10 +60,16 @@
   "initializationError": {
     "message": "The extension cannot work on this page."
   },
+  "permissionPromptText": {
+    "message": "Site access permission is required for the extension to work automatically on page load."
+  },
+  "grantPermissionBtn": {
+    "message": "Grant access"
+  },
   "permissionDenied": {
-    "message": "Permission to access this site was denied. Automatic control cannot work without it."
+    "message": "Site access was denied. Automatic control cannot work without it."
   },
   "permissionNeeded": {
-    "message": "Site permission is needed. Toggle the switch to grant access."
+    "message": "Site access permission is needed for automatic reload."
   }
 }

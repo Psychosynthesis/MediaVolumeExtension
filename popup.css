@@ -144,6 +144,47 @@ h1 {
   color: #c62828;
 }
 
+.hidden {
+  display: none !important;
+}
+
+.permission-banner {
+  margin-top: 12px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: color-mix(in srgb, Highlight 15%, Canvas);
+  border: 1px solid color-mix(in srgb, Highlight 40%, Canvas);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.permission-text {
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.grant-btn {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
+  background: Highlight;
+  color: HighlightText;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: opacity 120ms ease;
+}
+
+.grant-btn:hover {
+  opacity: 0.9;
+}
+
+.grant-btn:active {
+  opacity: 0.8;
+}
+
 button,
 input {
   font: inherit;

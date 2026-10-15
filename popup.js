@@ -8,6 +8,8 @@ const enabledLabelElement = document.querySelector('#enabled-label');
 const volumeElement = document.querySelector('#volume');
 const volumeValueElement = document.querySelector('#volume-value');
 const statusElement = document.querySelector('#status');
+const permissionBannerElement = document.querySelector('#permission-banner');
+const grantPermissionButton = document.querySelector('#grant-permission');
 
 let siteDomain = null;
 let storageKey = null;
@@ -43,15 +45,7 @@ function getHostname(url) {
   }
 }
 
-function getOriginPatterns(domain) {
-  if (utils.isIpAddress(domain) || domain === 'localhost') {
-    return [`*://${domain}/*`];
-  }
-
-  return [`*://${domain}/*`, `*://*.${domain}/*`];
-}
-
-async function hasOriginPermission(domain) {
+async function hasPermissions(domain) {
   if (!extensionApi?.permissions?.contains) {
     return true;
   }
@@ -62,29 +56,34 @@ async function hasOriginPermission(domain) {
       return true;
     }
 
-    const patterns = getOriginPatterns(domain);
-    return await extensionApi.permissions.contains({ origins: patterns });
+    if (domain) {
+      const patterns = utils.isIpAddress(domain) || domain === 'localhost'
+        ? [`*://${domain}/*`]
+        : [`*://${domain}/*`, `*://*.${domain}/*`];
+
+      return await extensionApi.permissions.contains({ origins: patterns });
+    }
+
+    return false;
   } catch (error) {
     console.warn('[Per-site Media Volume] Permission check failed:', error);
     return false;
   }
 }
 
-async function ensureOriginPermission(domain) {
+async function requestPermissions() {
   if (!extensionApi?.permissions?.request) {
     return true;
   }
 
-  const alreadyGranted = await hasOriginPermission(domain);
-  if (alreadyGranted) {
-    return true;
-  }
-
-  const patterns = getOriginPatterns(domain);
   try {
-    return await extensionApi.permissions.request({ origins: patterns });
+    const granted = await extensionApi.permissions.request({
+      origins: ['<all_urls>'],
+    });
+
+    return Boolean(granted);
   } catch (error) {
-    console.warn('[Per-site Media Volume] Permission request failed:', error);
+    console.error('[Per-site Media Volume] Permission request failed:', error);
     return false;
   }
 }
@@ -134,6 +133,7 @@ async function initialize() {
   applyTranslations();
   enabledElement.disabled = true;
   volumeElement.disabled = true;
+  permissionBannerElement.classList.add('hidden');
 
   const [activeTab] = await extensionApi.tabs.query({
     active: true,
@@ -188,25 +188,47 @@ async function initialize() {
   volumeElement.disabled = false;
   render();
 
-  if (config.enabled) {
-    const hasPerm = await hasOriginPermission(siteDomain);
-    if (!hasPerm) {
+  const hasPerm = await hasPermissions(siteDomain);
+  if (!hasPerm) {
+    permissionBannerElement.classList.remove('hidden');
+    if (config.enabled) {
       statusElement.classList.add('error');
       statusElement.textContent = getMessage('permissionNeeded');
     }
   }
 }
 
+async function handlePermissionGrant() {
+  const granted = await requestPermissions();
+  if (granted) {
+    permissionBannerElement.classList.add('hidden');
+    config.enabled = true;
+    enabledElement.checked = true;
+    render();
+    saveConfig();
+  } else {
+    statusElement.classList.add('error');
+    statusElement.textContent = getMessage('permissionDenied');
+  }
+}
+
+grantPermissionButton.addEventListener('click', handlePermissionGrant);
+
 enabledElement.addEventListener('change', async () => {
   if (enabledElement.checked) {
-    const granted = await ensureOriginPermission(siteDomain);
-    if (!granted) {
-      enabledElement.checked = false;
-      config.enabled = false;
-      render();
-      statusElement.classList.add('error');
-      statusElement.textContent = getMessage('permissionDenied');
-      return;
+    const hasPerm = await hasPermissions(siteDomain);
+    if (!hasPerm) {
+      const granted = await requestPermissions();
+      if (!granted) {
+        enabledElement.checked = false;
+        config.enabled = false;
+        render();
+        permissionBannerElement.classList.remove('hidden');
+        statusElement.classList.add('error');
+        statusElement.textContent = getMessage('permissionDenied');
+        return;
+      }
+      permissionBannerElement.classList.add('hidden');
     }
   }
 
