@@ -43,6 +43,52 @@ function getHostname(url) {
   }
 }
 
+function getOriginPatterns(domain) {
+  if (utils.isIpAddress(domain) || domain === 'localhost') {
+    return [`*://${domain}/*`];
+  }
+
+  return [`*://${domain}/*`, `*://*.${domain}/*`];
+}
+
+async function hasOriginPermission(domain) {
+  if (!extensionApi?.permissions?.contains) {
+    return true;
+  }
+
+  try {
+    const hasAll = await extensionApi.permissions.contains({ origins: ['<all_urls>'] });
+    if (hasAll) {
+      return true;
+    }
+
+    const patterns = getOriginPatterns(domain);
+    return await extensionApi.permissions.contains({ origins: patterns });
+  } catch (error) {
+    console.warn('[Per-site Media Volume] Permission check failed:', error);
+    return false;
+  }
+}
+
+async function ensureOriginPermission(domain) {
+  if (!extensionApi?.permissions?.request) {
+    return true;
+  }
+
+  const alreadyGranted = await hasOriginPermission(domain);
+  if (alreadyGranted) {
+    return true;
+  }
+
+  const patterns = getOriginPatterns(domain);
+  try {
+    return await extensionApi.permissions.request({ origins: patterns });
+  } catch (error) {
+    console.warn('[Per-site Media Volume] Permission request failed:', error);
+    return false;
+  }
+}
+
 function renderVolume() {
   const percent = Math.round(config.volume * 100);
   volumeElement.value = String(percent);
@@ -141,9 +187,29 @@ async function initialize() {
   enabledElement.disabled = false;
   volumeElement.disabled = false;
   render();
+
+  if (config.enabled) {
+    const hasPerm = await hasOriginPermission(siteDomain);
+    if (!hasPerm) {
+      statusElement.classList.add('error');
+      statusElement.textContent = getMessage('permissionNeeded');
+    }
+  }
 }
 
-enabledElement.addEventListener('change', () => {
+enabledElement.addEventListener('change', async () => {
+  if (enabledElement.checked) {
+    const granted = await ensureOriginPermission(siteDomain);
+    if (!granted) {
+      enabledElement.checked = false;
+      config.enabled = false;
+      render();
+      statusElement.classList.add('error');
+      statusElement.textContent = getMessage('permissionDenied');
+      return;
+    }
+  }
+
   config.enabled = enabledElement.checked;
   render();
   saveConfig();

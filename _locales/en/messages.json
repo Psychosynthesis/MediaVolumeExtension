@@ -59,5 +59,11 @@
   },
   "initializationError": {
     "message": "The extension cannot work on this page."
+  },
+  "permissionDenied": {
+    "message": "Permission to access this site was denied. Automatic control cannot work without it."
+  },
+  "permissionNeeded": {
+    "message": "Site permission is needed. Toggle the switch to grant access."
   }
 }

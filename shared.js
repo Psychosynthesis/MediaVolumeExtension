@@ -105,6 +105,7 @@
     clampVolume,
     getSiteDomain,
     getStorageKey,
+    isIpAddress,
     normalizeHostname,
     validateConfig,
   });
